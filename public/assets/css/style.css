@@ -735,4 +735,8 @@ img {
     line-height: 1.5;
     color: #FFFFFF;
     white-space: nowrap;
+    outline: none;
+    background: transparent;
+    border: none;
+    cursor: pointer;
  }
