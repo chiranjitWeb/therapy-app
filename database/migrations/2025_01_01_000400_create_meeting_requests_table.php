@@ -9,7 +9,7 @@ return new class extends Migration {
     {
         Schema::create('meeting_requests', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('availability_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('availability_id')->constrained('availabilities')->cascadeOnDelete();
             $table->foreignId('therapist_id')->constrained('users')->cascadeOnDelete();
             $table->text('message');
             $table->unsignedTinyInteger('status'); // MeetingRequestStatus
