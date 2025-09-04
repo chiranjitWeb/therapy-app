@@ -22,56 +22,58 @@
   </div>
 
   <div class="new-users-wrapper">
-   <div class="filter-box">
-       <div class="field search-container">
-           <input type="search" wire:model.live="search" placeholder="Wyszukaj">
-           <div class="search-icon icon-default">
-               <i class="las la-search"></i>
-           </div>
-           <div class="search-icon icon-focus">
-               <i class="las la-angle-left"></i>
-           </div>
-       </div>
-       <div class="field">
-           <input type="text" name="checkIn" id="datepicker01" class="calendar" placeholder="Data od" min="">
-       </div>
-   </div>
-   <div class="table-box">
-       <table>
-           <thead>
-               <tr>
-                   <th>Imię</th>
-                   <th>Nazwisko</th>
-                   <th>Uzależnienie</th>
-                   <th>Spotkania</th>
-                   <th></th>
-               </tr>
-           </thead>
-           <tbody>
-               @forelse($users as $u)
-               <tr>
+        <div class="filter-box">
+            <div class="field search-container">
+                <input type="search" wire:model.live="search" placeholder="Wyszukaj">
+                <div class="search-icon icon-default">
+                    <i class="las la-search"></i>
+                </div>
+                <div class="search-icon icon-focus">
+                    <i class="las la-angle-left"></i>
+                </div>
+            </div>
+            <div class="field">
+                <input type="text" name="checkIn" id="datepicker01" class="calendar" placeholder="Data od" min="">
+            </div>
+        </div>
+        <div class="table-box">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Imię</th>
+                        <th>Nazwisko</th>
+                        <th>Uzależnienie</th>
+                        <th>Spotkania</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse($users as $u)
+                    <tr>
+                        
+                        <td data-column="Imię">{{ $u->first_name }}</td>
+                        <td data-column="Nazwisko">{{ $u->last_name }}</td>
+                        <td data-column="Uzależnienie">{{ $u->addiction?->name ?? 'None' }}</td>
+                        <td data-column="Spotkania">{{ $u->meetings_count }}</td>
+                        <td data-column="">
+                            <a href="#" class="view-button" role="button">
+                                <i class="las la-arrow-right"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    @empty
+                    <tr>
+                        <td colspan="5" class="text-center py-4">No users found</td>
+                    </tr>
+                    @endforelse
+                </tbody>
+            </table>
+                <div class="card-footer bg-white">
                 
-                   <td data-column="Imię">{{ $u->first_name }}</td>
-                   <td data-column="Nazwisko">{{ $u->last_name }}</td>
-                   <td data-column="Uzależnienie">{{ $u->addiction?->name ?? 'None' }}</td>
-                   <td data-column="Spotkania">{{ $u->meetings_count }}</td>
-                   <td data-column="">
-                       <a href="#" class="view-button" role="button">
-                           <i class="las la-arrow-right"></i>
-                       </a>
-                   </td>
-               </tr>
-               @empty
-               <tr>
-                   <td colspan="5" class="text-center py-4">No users found</td>
-               </tr>
-               @endforelse
-           </tbody>
-       </table>
-       <div class="card-footer bg-white">
-           {{ $users->links() }}
-       </div>
-   </div>
-</div>
+                    {{ $users->links('pagination.pagination') }}
+            </div>
+        </div>
+  </div>
+
 
 </section>

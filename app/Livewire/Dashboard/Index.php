@@ -19,26 +19,6 @@ class Index extends Component
         $this->resetPage();
     }
 
-    // public function getUsersProperty(): LengthAwarePaginator
-    // {
-    //     $users = User::query()
-    //         ->whereHas('roles', fn($q) => $q->where('name','user'))
-    //         ->when($this->search, function ($q) {
-    //             $q->where(function ($qq) {
-    //                 $qq->where('first_name','like', "%{$this->search}%")
-    //                    ->orWhere('last_name','like', "%{$this->search}%")
-    //                    ->orWhere('email','like', "%{$this->search}%");
-    //             });
-    //         })
-    //         ->withCount('meetings')
-    //         ->with('addiction')
-    //         ->paginate(10);
-        
-    //     // Temporarily add this to debug
-    //     dd($users->items());
-        
-    //     return $users;
-    // }
 
     public function getUsersProperty(): LengthAwarePaginator
     {
@@ -56,7 +36,7 @@ class Index extends Component
             })
             ->withCount('meetings')
             ->with('addiction')
-            ->paginate(1);
+            ->paginate(10);
     }
 
     public function render()

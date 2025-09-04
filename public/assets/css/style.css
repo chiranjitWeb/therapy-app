@@ -740,3 +740,45 @@ img {
     border: none;
     cursor: pointer;
  }
+
+
+ /**Pagination**/
+
+ .custom-pagination {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    margin: 20px 0 0;
+}
+
+.custom-pagination li {
+    margin: 0 4px;
+}
+
+.custom-pagination li button {
+    padding: 6px 12px;         
+    border: 1px solid #ccc;
+    background: #fff;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 4px;
+    min-width: 32px;
+    box-sizing: border-box;      
+}
+
+.custom-pagination li.active {
+    font-weight: bold;
+    background-color: #D0B5A4;
+    color: #fff;
+    border-color: #D0B5A4;
+    padding: 6px 12px;           
+    min-width: 32px;              
+    box-sizing: border-box;
+}
+
+.custom-pagination li.disabled {
+    color: #aaa;
+    cursor: not-allowed;
+}
+
