@@ -753,18 +753,63 @@ img {
 }
 
 .custom-pagination li {
-    margin: 0 4px;
-}
-
-.custom-pagination li button {
-    padding: 6px 12px;         
+    position: relative;
     border: 1px solid #ccc;
     background: #fff;
     cursor: pointer;
     font-size: 14px;
     border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     min-width: 32px;
-    box-sizing: border-box;      
+    box-sizing: border-box;
+    margin: 0 4px;
+}
+
+.custom-pagination li:first-child,
+.custom-pagination li:last-child {
+    font-size: 0;
+}
+
+.custom-pagination li:first-child:before,
+.custom-pagination li:last-child:before {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 16px;
+    content: "\f104";
+    font-family: 'Line Awesome Free';
+    font-size: 16px;
+    font-weight: bold;
+    color: #000;
+    pointer-events: none;
+}
+
+.custom-pagination li button {
+    width: 100%;
+    height: 100%;
+}
+
+.custom-pagination li:first-child button,
+.custom-pagination li:last-child button {
+    opacity: 0;
+}
+
+.custom-pagination li:last-child:before {
+    content: "\f105";
+}
+
+.custom-pagination li.disabled::before {
+    opacity: 0.5;
+}
+
+.custom-pagination li button {
+    cursor: pointer;
+    font-size: 14px;
+    border: none;
+    background: transparent;
 }
 
 .custom-pagination li.active {
