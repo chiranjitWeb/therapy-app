@@ -12,17 +12,17 @@ Route::middleware('guest:web')->prefix('auth')->group(static function () {
 
     Route::controller(LoginController::class)->group(static function () {
         Route::get('login', 'showLoginForm')->name('login');
-        Route::post('login', 'login')->name('login.attempt');
+        Route::post('post-login', 'login')->name('login.attempt');
     });
 
     Route::controller(ForgotPasswordController::class)->group(static function () {
         Route::get('forgot-password', 'show')->name('password.request');
-        Route::post('forgot-password', 'send')->name('password.email');
+        Route::post('post-forgot-password', 'send')->name('password.email');
     });
 
     Route::controller(ResetPasswordController::class)->group(static function () {
         Route::get('reset-password/{token}', 'show')->name('password.reset');
-        Route::post('reset-password', 'reset')->name('password.update');
+        Route::post('update-reset-password', 'reset')->name('password.update');
     });
 });
 
