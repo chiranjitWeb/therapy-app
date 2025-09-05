@@ -10,7 +10,7 @@
              <li><a href="{{ route('dashboard') }}" class="active">
                    <div class="navigation-icon"><i class="las la-columns"></i></div> <span>Dashboard</span>
                 </a></li>
-             <li><a href="#">
+             <li><a href="{{ route('calendar') }}">
                    <div class="navigation-icon"><i class="las la-calendar"></i></div> <span>Kalendarz</span>
                 </a></li>
              <li><a href="#">
