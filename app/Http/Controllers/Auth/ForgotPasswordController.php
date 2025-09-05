@@ -15,22 +15,29 @@ class ForgotPasswordController extends Controller
     }
 
     // Handle sending password reset link
-    public function send(SendResetLinkRequest $request)
+    public function reset(ResetPasswordRequest $request)
     {
-        $status = Password::sendResetLink(
-            $request->only('email')
+        $status = Password::reset(
+            $request->only('email', 'password', 'password_confirmation', 'token'),
+            function ($user, $password) {
+                $user->forceFill([
+                    'password' => Hash::make($password),
+                ])->save();
+    
+                Auth::login($user);
+            }
         );
-
-        if ($status === Password::RESET_LINK_SENT) {
-            return redirect()->back()->with('toast', [
+    
+        if ($status === Password::PASSWORD_RESET) {
+            return redirect()->route('dashboard')->with('toast', [
                 'type' => 'success',
-                'message' => 'Password reset link sent'
+                'message' => 'Password has been reset!'
             ]);
         }
-
-        return redirect()->back()->with('toast', [
+    
+        return back()->with('toast', [
             'type' => 'error',
             'message' => __($status)
-        ]);
+        ])->withInput($request->only('email'));
     }
 }

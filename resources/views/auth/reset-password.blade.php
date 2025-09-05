@@ -12,7 +12,7 @@
         
                 <div class="mb-3">
                     <label>Email</label>
-                    <input type="email" name="email" class="form-control" required autofocus>
+                    <input type="email" name="email" class="form-control" value="{{ old('email') }}"  required autofocus>
                 </div>
         
                 <div class="mb-3">

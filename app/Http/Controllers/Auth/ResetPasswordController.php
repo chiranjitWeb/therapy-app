@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\Auth\ResetPasswordRequest;
 use Illuminate\Support\Facades\Auth;
 use Flasher\Toastr\Laravel\Facade\Toastr;
 
@@ -16,14 +17,11 @@ class ResetPasswordController extends Controller
         return view('auth.reset-password', ['token' => $token]);
     }
 
-    public function reset(Request $request)
+    /**
+     * Handle the password reset.
+     */
+    public function reset(ResetPasswordRequest $request)
     {
-        $request->validate([
-            'token' => 'required',
-            'email' => 'required|email',
-            'password' => 'required|min:8|confirmed',
-        ]);
-
         $status = Password::reset(
             $request->only('email', 'password', 'password_confirmation', 'token'),
             function ($user, $password) {
@@ -35,12 +33,16 @@ class ResetPasswordController extends Controller
             }
         );
 
-        if ($status == Password::PASSWORD_RESET) {
-            Toastr::success('Password has been reset!');
-            return redirect()->route('dashboard');
+        if ($status === Password::PASSWORD_RESET) {
+            return redirect()->route('dashboard')->with('toast', [
+                'type' => 'success',
+                'message' => 'Password has been reset!'
+            ]);
         }
 
-        Toastr::error('Invalid token or email.');
-        return back()->withInput($request->only('email'));
+        return back()->with('toast', [
+            'type' => 'error',
+            'message' => 'Invalid token or email.'
+        ])->withInput($request->only('email'));
     }
 }
