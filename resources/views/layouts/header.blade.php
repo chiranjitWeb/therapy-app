@@ -3,7 +3,7 @@
       <div class="header-wrapper reverse-item">
          <div class="header-left">
             <button class="btn-toggle-nav"><i class="las la-bars"></i></button>
-            <h4>Dashboard</h4>
+            <h4>{{ $title }}</h4>
          </div>
          <div class="header-right">
             <div class="user-menu-wrapper">

@@ -12,17 +12,18 @@ class Board extends Component
 {
     public string $day;
     public array $slots = [];
+    public $comingsoon ="Coming Soon";
 
     public function mount()
     {
-        $this->day = Carbon::now()->toDateString();
-        $this->loadDay();
+        
+        //$this->day = Carbon::now()->toDateString();
+        //$this->loadDay();
     }
 
     public function loadDay()
     {
-        /** @var CalendarServiceInterface $svc */
-        $svc = app(\App\Interfaces\Services\CalendarServiceInterface::class);
+        $svc = app(CalendarServiceInterface::class);
         $items = $svc->availabilitiesForTherapist(Auth::id(), Carbon::parse($this->day));
 
         $this->slots = $items->map(fn(Availability $a) => [
@@ -33,25 +34,8 @@ class Board extends Component
         ])->toArray();
     }
 
-    public function addAvailability(string $start, string $end)
-    {
-        $svc = app(\App\Interfaces\Services\CalendarServiceInterface::class);
-        $svc->createAvailability(Auth::id(), Carbon::parse($start), Carbon::parse($end));
-        $this->loadDay();
-        $this->dispatch('toast', type:'success', message:'Availability added');
-    }
-
-    public function moveAvailability(int $id, string $start, string $end)
-    {
-        $svc = app(\App\Interfaces\Services\CalendarServiceInterface::class);
-        $svc->moveAvailability($id, Carbon::parse($start), Carbon::parse($end));
-        $this->loadDay();
-        $this->dispatch('toast', type:'success', message:'Availability moved');
-    }
-
     public function render()
     {
-        return view('livewire.calendar.board')
-            ->layout('layouts.app', ['title' => 'Calendar']);
+        return view('livewire.calendar.index');
     }
 }

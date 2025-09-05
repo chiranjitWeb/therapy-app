@@ -18,22 +18,17 @@ class Index extends Component
     {
         $this->resetPage();
     }
-
-
+ 
     public function getUsersProperty(): LengthAwarePaginator
     {
         return User::query()
             ->whereHas('roles', fn($q) => $q->where('name', 'user'))
-            ->when($this->search, function ($q) {
-                $q->where(function ($qq) {
-                    $qq->where('first_name', 'like', "%{$this->search}%")
-                       ->orWhere('last_name', 'like', "%{$this->search}%")
-                       ->orWhere('email', 'like', "%{$this->search}%")
-                       ->orWhereHas('addiction', function ($q2) {
-                           $q2->where('name', 'like', "%{$this->search}%");   ///also search with addiction name 
-                       });
-                });
-            })
+            ->when($this->search, fn($q) => $q->where(fn($qq) =>
+                $qq->where('first_name', 'like', "%{$this->search}%")
+                   ->orWhere('last_name', 'like', "%{$this->search}%")
+                   ->orWhere('email', 'like', "%{$this->search}%")
+                   ->orWhereHas('addiction', fn($q2) => $q2->where('name', 'like', "%{$this->search}%"))
+            ))
             ->withCount('meetings')
             ->with('addiction')
             ->paginate(10);
@@ -43,11 +38,11 @@ class Index extends Component
     {
         $totalUsers = User::whereHas('roles', fn($q) => $q->where('name','user'))->count();
         $totalTherapists = User::whereHas('roles', fn($q) => $q->where('name','therapist'))->count();
-
+    
         return view('livewire.dashboard.index', [
             'users' => $this->users,
             'totalUsers' => $totalUsers,
             'totalTherapists' => $totalTherapists,
-        ])->layout('layouts.app', ['title' => 'Dashboard']);
+        ]);
     }
 }
